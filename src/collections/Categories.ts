@@ -8,7 +8,7 @@ export const Categories: CollectionConfig = {
   },
   fields: [
     {
-      name: 'alt',
+      name: 'name',
       type: 'text',
       required: true
     }
