@@ -26,7 +26,7 @@ export const CategoryDropDown = ({
   const {getDropdownPosition} = useDropdownPosition(dropdownRef);
 
   const onMouseEnter = () => {
-    if (category.subcategories){
+    if (category.subcategories.docs.length > 0){
       setIsOpen(true);
     }
   }
