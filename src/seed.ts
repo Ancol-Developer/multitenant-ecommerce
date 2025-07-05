@@ -1,3 +1,7 @@
+import { getPayload } from "payload"
+import config from "@payload-config"
+import 'dotenv/config'
+
 const categories = [
   {
     name: "All",
@@ -133,3 +137,42 @@ const categories = [
     ],
   },
 ]
+
+const seed = async () => {
+  const payload = await getPayload({ config });
+
+  for (const category of categories) {
+    const parrentCategory = await payload.create({
+      collection: "categories",
+      data: {
+        name: category.name,
+        slug: category.slug,
+        color: category.color,
+        parent: null,
+      }
+    });
+
+    for (const subCategory of  category.subcategories ?? []) {
+      await payload.create({
+        collection: "categories",
+        data: {
+          name: subCategory.name,
+          slug: subCategory.slug,
+          parent: parrentCategory.id,
+        }
+      });
+    }
+  }
+}
+
+// Run seeding: npx tsx src/seed.ts 
+try {
+  await seed();
+  console.log('Seeding commplete successfully');
+  process.exit(0);
+} catch (error){
+  console.log('Error during seeding: ', error);
+  process.exit(1); // Exit with error code
+}
+
+process.exit(0);
