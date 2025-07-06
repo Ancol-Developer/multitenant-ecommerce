@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { CustomCategory } from "../types";
 import { CategoryDropDown } from "./category-dropdown";
+import { CategoriesSideBar } from "./categories-sidebar";
+import { CustomCategory } from "../types";
 
 interface Props {
   data: CustomCategory[];
@@ -59,7 +60,9 @@ export const Categories = ({
 
   return (
     <div className="relative w-full">
-      
+      {/* Category SideBar */}
+      <CategoriesSideBar isOpen={isSideBarOpen} onOpenChange={setIsSideBarOpen} data={data}/>
+
       {/* Hidden div to measure all items  */}
       <div
        className="absolute opacity-0 pointer-events-none flex"
@@ -99,6 +102,7 @@ export const Categories = ({
             className={cn("h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
               isActiveCategoryHidden && !isAnyHovered && "bg-white border-primary"
             )}
+            onClick={() => setIsSideBarOpen(true)}
           >
             View All
             <ListFilterIcon className="ml-2"/>

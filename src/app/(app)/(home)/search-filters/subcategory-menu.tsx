@@ -37,7 +37,7 @@ export const SubcategoryMenu = ({
             {(category.subcategories as Category[]).map((subcategory) => (
               <Link 
                 key={subcategory.slug} 
-                href="\"
+                href={`/${category.slug}/${subcategory.slug}`}
                 className="block w-full text-left p-4 hover:bg-black hover:text-white justify-between items-center underline font-medium"
               >
                   {subcategory.name}
