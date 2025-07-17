@@ -11,19 +11,23 @@ import {
   SheetTitle
 } from "@/components/ui/sheet"
 import { useRouter } from "next/navigation";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  data: CustomCategory[]; // TODO: Remove this later
 }
 
 export const CategoriesSideBar = ({
   isOpen,
   onOpenChange,
-  data
+  // data
 }: Props)  => {
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
+
   const router = useRouter();
 
   const [parentCategories, setParentCategories] = useState<CustomCategory[] | null>(null);
