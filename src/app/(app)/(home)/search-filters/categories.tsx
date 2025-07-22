@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 
 import { CategoryDropDown } from "./category-dropdown";
 import { CategoriesSideBar } from "./categories-sidebar";
-import { CustomCategory } from "../types";
+import { CategogriesGetManyOutput } from "@/modules/categories/type";
 
 interface Props {
-  data: CustomCategory[];
+  data: CategogriesGetManyOutput;
 };
 
 export const Categories = ({
