@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 
 import { CategoryDropDown } from "./category-dropdown";
 import { CategoriesSideBar } from "./categories-sidebar";
-import { CustomCategory } from "../types";
+import { CategogriesGetManyOutput } from "@/modules/categories/type";
 
 interface Props {
-  data: CustomCategory[];
+  data: CategogriesGetManyOutput;
 };
 
 export const Categories = ({
@@ -61,7 +61,7 @@ export const Categories = ({
   return (
     <div className="relative w-full">
       {/* Category SideBar */}
-      <CategoriesSideBar isOpen={isSideBarOpen} onOpenChange={setIsSideBarOpen} data={data}/>
+      <CategoriesSideBar isOpen={isSideBarOpen} onOpenChange={setIsSideBarOpen}/>
 
       {/* Hidden div to measure all items  */}
       <div
