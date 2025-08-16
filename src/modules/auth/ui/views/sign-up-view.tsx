@@ -2,9 +2,12 @@
 
 import z from "zod"
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
+import { toast } from "sonner";
 import { Poppins } from "next/font/google";
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query";
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -20,6 +23,7 @@ import {
 
 import { registerSchema } from "../../schemas";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,6 +31,18 @@ const poppins = Poppins({
 });
 
 export const SignUpView = () => {
+  const router = useRouter();
+
+  const trpc = useTRPC();
+  const register = useMutation(trpc.auth.register.mutationOptions({
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      router.push("/");
+    }
+  }));
+
   const form = useForm<z.infer<typeof registerSchema>>({
     mode: "all",
     resolver: zodResolver(registerSchema),
@@ -38,7 +54,7 @@ export const SignUpView = () => {
   });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
+    register.mutate(values)
   }
 
   const username = form.watch("username");
@@ -71,9 +87,11 @@ export const SignUpView = () => {
                 </Link>
               </Button>
             </div>
+
             <h1 className="text-4xl font-medium">
               Join over 1000 creators earning money on Funroad.
             </h1>
+
             <FormField 
               name="username"
               render={({ field }) =>(
@@ -92,6 +110,40 @@ export const SignUpView = () => {
                 </FormItem>
               )}
             />
+
+            <FormField 
+              name="email"
+              render={({ field }) =>(
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field}/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField 
+              name="password"
+              render={({ field }) =>(
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <Button type="submit"
+              disabled={register.isPending}
+              size="lg"
+              variant="elevated"
+              className="bg-black text-white hover:bg-pink-400 hover:text-primary">
+              Create Account
+            </Button>
           </form>
         </Form>
       </div>
