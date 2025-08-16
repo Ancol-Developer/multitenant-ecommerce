@@ -78,7 +78,7 @@ const Navbar = () => {
           asChild
           variant="secondary"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white text-black hover:bg-pink-400 hover:text-white transition-colors text-lg">
-          <Link href="/sign-in">
+          <Link prefetch href="/sign-in">
             Login
           </Link>
         </Button>
@@ -87,7 +87,7 @@ const Navbar = () => {
           asChild
           variant="secondary"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:bg-pink-400 hover:text-white transition-colors text-lg">
-          <Link href="/sign-up">
+          <Link prefetch href="/sign-up">
             Start selling
           </Link>
         </Button>
